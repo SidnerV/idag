@@ -1,0 +1,62 @@
+@startuml
+title Backend
+class Bruker {
+ - id: int
+ - navn: String
+}
+
+Bruker o--> "0..*" Gruppe : Grupper
+
+class Gruppe {
+ - id: int
+ - brukere: List<Bruker>
+ - sub-grupper: Map<tittel, List<Bruker>>
+}
+
+Gruppe *--> "1..*" Bruker : Medlemmer
+Gruppe *--> "1..1" Handleliste : Handleliste
+Gruppe *--> "1..1" Middagsliste : Middagsplan
+Gruppe *--> "1..1" Kalender : Kalender
+Gruppe o--> "0..*" Oppgave
+
+class Handleliste {
+
+}
+
+Handleliste o--> "0..*" Listeelement
+
+class Listeelement {
+ - tittel: String
+ - info: String
+}
+
+class Middagsliste {
+
+}
+Middagsliste o--> "0..*" Middag
+class Middag {
+ - id: int
+ - info: String
+ - oppskrift: String
+ - ingredienser: String
+}
+
+class Kalender {
+
+}
+
+Kalender o--> "0..*" Hendelse
+class Hendelse {
+ - tid: int
+ - tittel: String
+ - info: String
+}
+
+class Oppgave {
+}
+Oppgave --|> Hendelse
+
+class Aktivitet {
+}
+Aktivitet --|> Hendelse
+@enduml
