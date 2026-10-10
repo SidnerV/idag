@@ -1,4 +1,4 @@
-package no.idag.idag;
+package no.idag;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

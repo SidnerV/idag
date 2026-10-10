@@ -1,4 +1,4 @@
-package no.idag.idag;
+package no.idag;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
