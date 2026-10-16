@@ -1,28 +1,20 @@
-package no.idag.User;
+package no.idag.user;
 
 import jakarta.persistence.*;
-import no.idag.Group.AppGroup;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Table(name = "app_users")
 public class AppUser {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private long id;
 
     @Column
     private String name;
 
-    @ManyToMany
-    @JoinTable(
-            name = "user_groups",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "group_id")
-    )
-    private List<AppGroup> appGroups = new ArrayList<>();
+    // The keycloak identifier
+    @Column(name = "keycloak_subject", unique = true)
+    private String keycloakSubject;
 
     protected AppUser() {}
 
@@ -30,7 +22,7 @@ public class AppUser {
         this.name = name;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 

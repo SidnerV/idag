@@ -5,7 +5,17 @@ class Bruker {
  - navn: String
 }
 
-Bruker o--> "0..*" Gruppe : Grupper
+Bruker o--> "0..*" Medlemskap : Grupper
+
+class Medlemskap {
+ - id: int
+ - rolle: Rolle
+}
+
+enum Rolle {
+ admin
+ basic
+}
 
 class Gruppe {
  - id: int
@@ -13,7 +23,7 @@ class Gruppe {
  - sub-grupper: Map<tittel, List<Bruker>>
 }
 
-Gruppe *--> "1..*" Bruker : Medlemmer
+Gruppe *--> "1..*" Medlemskap : Medlemmer
 Gruppe *--> "1..1" Handleliste : Handleliste
 Gruppe *--> "1..1" Middagsliste : Middagsplan
 Gruppe *--> "1..1" Kalender : Kalender
