@@ -1,12 +1,13 @@
 package no.idag.membership;
 
+import no.idag.enums.Role;
 import no.idag.group.AppGroup;
 import no.idag.group.GroupRepository;
 import no.idag.user.AppUser;
 import no.idag.user.UserRepository;
 import org.springframework.stereotype.Service;
-import no.idag.membership.MembershipDTOs.MembershipRequest;
-import no.idag.membership.MembershipDTOs.MembershipResponse;
+import no.idag.membership.MembershipDTOs.MembershipUserNameResponse;
+import no.idag.membership.MembershipDTOs.MembershipGroupNameResponse;
 
 import java.util.List;
 
@@ -22,30 +23,27 @@ public class MembershipService {
         this.groupRepository = groupRepo;
     }
 
-    public MembershipResponse createMembership(MembershipRequest req) {
-        AppUser user = userRepository.findById(req.userId()).orElse(null);
-        AppGroup group = groupRepository.findById(req.groupId()).orElse(null);
-        Membership membership = repository.save(new Membership(user, group, req.role()));
-
-        return MembershipResponse.from(membership);
+    public void createMembership(AppUser user, AppGroup group, Role role) {
+        this.repository.save(new Membership(user, group, role));
     }
 
-    public void deleteMembership(MembershipRequest req) {
-        this.repository.delete(this.repository.findByUserIdAndGroupId(req.userId(), req.groupId()));
+    public void deleteMembership(long groupId, long userId) {
+        //TODO check for instance
+        this.repository.deleteMembershipByGroupIdAndUserId(groupId, userId);
     }
 
-    public List<MembershipResponse> getMembershipsByUserId(Long userId) {
+    public List<MembershipGroupNameResponse> getMembershipsByUserId(Long userId) {
         if (!this.userRepository.existsById(userId)) {
             throw new IllegalArgumentException("User does not exist");
         }
-        return this.repository.getMembershipsByUserId(userId).stream().map(MembershipResponse::from).toList();
+        return this.repository.getMembershipsByUserId(userId).stream().map(MembershipGroupNameResponse::from).toList();
     }
 
-    public List<MembershipResponse> getMembershipsByGroupId(Long groupId) {
+    public List<MembershipUserNameResponse> getMembershipsByGroupId(Long groupId) {
         if (!this.groupRepository.existsById(groupId)) {
             throw new IllegalArgumentException("Group does not exist");
         }
-        return this.repository.getMembershipsByGroupId(groupId).stream().map(MembershipResponse::from).toList();
+        return this.repository.getMembershipsByGroupId(groupId).stream().map(MembershipUserNameResponse::from).toList();
     }
 
     //TODO add getters for different roles

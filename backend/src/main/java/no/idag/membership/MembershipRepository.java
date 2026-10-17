@@ -8,4 +8,5 @@ public interface MembershipRepository extends JpaRepository<Membership,Long> {
     List<Membership> getMembershipsByUserId(Long userId);
     List<Membership> getMembershipsByGroupId(Long groupId);
     Membership findByUserIdAndGroupId(Long userId, Long groupId);
+    void deleteMembershipByGroupIdAndUserId(Long groupId, Long userId);
 }

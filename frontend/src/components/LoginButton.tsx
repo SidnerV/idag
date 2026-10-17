@@ -7,8 +7,3 @@ export function LoginButton() {
         </button>
     );
 }
-
-// add to a logout window:
-//keycloak.logout({
-//    redirectUri: window.location.origin,
-//});

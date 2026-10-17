@@ -1,12 +1,11 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
-import './index.css'
 import App from './App.tsx'
-import keycloak from './keycloak';
+import keycloak from './components/keycloak.tsx';
 
 async function startApp() {
     const authenticated = await keycloak.init({
-        onLoad: "login-required",
+        onLoad: "check-sso",
     });
 
     createRoot(document.getElementById('root')!).render(
