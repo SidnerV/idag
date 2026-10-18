@@ -1,9 +1,6 @@
 package no.idag.calendar;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 @Entity
 public class Calendar {
@@ -11,7 +8,20 @@ public class Calendar {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column
+    private String name;
+
+    protected Calendar() {}
+
+    public Calendar(String name) {
+        this.name = name;
+    }
+
     public Long getId() {
         return id;
+    }
+
+    public String getName() {
+        return name;
     }
 }

@@ -15,6 +15,8 @@ Dette prosjektet er for at jeg skal lære mer om fullstackutvikling. Jeg skal og
 - Authentication: Keycloak
 
 ---
-- Keycloak: port 8081
+Dev urls:
+- Keycloak: http://localhost:8081
 - Docker: docker start idag-keycloak
-- Frontend: port 5173
+- Frontend: http://localhost:5173
+- API: http://localhost:8080

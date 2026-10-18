@@ -1,13 +1,13 @@
 package no.idag.group;
 
 import no.idag.calendar.Calendar;
-import no.idag.calendar.CalendarRepository;
+import no.idag.calendar.CalendarService;
 import no.idag.dinnerlist.Dinnerlist;
-import no.idag.dinnerlist.DinnerlistRepository;
+import no.idag.dinnerlist.DinnerlistService;
 import no.idag.enums.Role;
 import no.idag.membership.MembershipService;
 import no.idag.shoppinglist.Shoppinglist;
-import no.idag.shoppinglist.ShoppinglistRepository;
+import no.idag.shoppinglist.ShoppinglistService;
 import no.idag.user.AppUser;
 import no.idag.user.UserRepository;
 import org.springframework.stereotype.Service;
@@ -19,22 +19,22 @@ public class GroupService {
     private final GroupRepository groupRepo;
 
     //TODO change to the services rather than the repositories
-    private final CalendarRepository calendarRepo;
-    private final DinnerlistRepository dinnerlistRepo;
-    private final ShoppinglistRepository shoppinglistRepo;
+    private final CalendarService calendarService;
+    private final DinnerlistService dinnerlistService;
+    private final ShoppinglistService shoppinglistService;
     private final UserRepository userRepo;
     private final MembershipService membershipService;
 
     public GroupService(GroupRepository groupRepository,
-                        CalendarRepository calendarRepo,
-                        DinnerlistRepository dinnerlistRepo,
-                        ShoppinglistRepository shoppinglistRepo,
+                        CalendarService calendarService,
+                        DinnerlistService dinnerlistService,
+                        ShoppinglistService shoppinglistService,
                         UserRepository userRepo,
                         MembershipService membershipService) {
         this.groupRepo = groupRepository;
-        this.calendarRepo = calendarRepo;
-        this.dinnerlistRepo = dinnerlistRepo;
-        this.shoppinglistRepo = shoppinglistRepo;
+        this.calendarService = calendarService;
+        this.dinnerlistService = dinnerlistService;
+        this.shoppinglistService = shoppinglistService;
         this.userRepo = userRepo;
         this.membershipService = membershipService;
     }
@@ -47,10 +47,9 @@ public class GroupService {
     }
 
     public GroupResponse createGroup(GroupRequest req, String keycloakSubject) {
-        // TODO add checks for instances in repositories
-        Calendar calendar = calendarRepo.findById(req.calendarId()).get();
-        Dinnerlist dinnerlist = dinnerlistRepo.findById(req.dinnerlistId()).get();
-        Shoppinglist shoppinglist = shoppinglistRepo.findById(req.shoppinglistId()).get();
+        Calendar calendar = this.calendarService.createCalendar(req.name());
+        Dinnerlist dinnerlist = this.dinnerlistService.createDinnerlist(req.name());
+        Shoppinglist shoppinglist = this.shoppinglistService.createShoppinglist(req.name());
 
         AppGroup group = this.groupRepo.save(new AppGroup(req.name(), calendar, dinnerlist, shoppinglist));
 

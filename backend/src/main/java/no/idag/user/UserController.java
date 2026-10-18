@@ -2,6 +2,8 @@ package no.idag.user;
 
 import no.idag.membership.MembershipService;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.*;
 import no.idag.user.UserDTOs.UserResponse;
 import no.idag.user.UserDTOs.UserRequest;
@@ -27,8 +29,9 @@ public class UserController {
 
     @PostMapping("")
     @ResponseStatus(HttpStatus.CREATED)
-    public UserResponse createUser(@RequestBody UserRequest u) {
-        return this.userService.createUser(u);
+    public UserResponse createUser(@RequestBody UserRequest u, @AuthenticationPrincipal Jwt jwt) {
+        String keycloakSubject = jwt.getSubject();
+        return this.userService.createUser(u, keycloakSubject);
     }
 
     @GetMapping("/{id}/groups")

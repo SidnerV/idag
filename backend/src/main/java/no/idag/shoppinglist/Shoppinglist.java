@@ -1,9 +1,6 @@
 package no.idag.shoppinglist;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 @Entity
 public class Shoppinglist {
@@ -11,7 +8,20 @@ public class Shoppinglist {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column
+    private String name;
+
+    protected Shoppinglist() {}
+
+    public Shoppinglist(String name) {
+        this.name = name;
+    }
+
     public Long getId() {
         return id;
+    }
+
+    public String getName() {
+        return name;
     }
 }

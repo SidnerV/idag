@@ -1,4 +1,4 @@
-import keycloak from "./keycloak";
+import keycloak from "../keycloak.tsx";
 
 export function LogoutButton() {
     return (

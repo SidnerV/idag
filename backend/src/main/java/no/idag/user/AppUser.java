@@ -18,8 +18,9 @@ public class AppUser {
 
     protected AppUser() {}
 
-    public AppUser(String name) {
+    public AppUser(String name, String keycloakSubject) {
         this.name = name;
+        this.keycloakSubject = keycloakSubject;
     }
 
     public long getId() {
@@ -28,6 +29,10 @@ public class AppUser {
 
     public String getName() {
         return name;
+    }
+
+    public String getKeycloakSubject() {
+        return keycloakSubject;
     }
 
     public void setName(String name) {

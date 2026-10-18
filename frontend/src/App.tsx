@@ -1,7 +1,7 @@
 import keycloak from "./components/keycloak.tsx";
 import './App.css'
 import {Welcome} from "./components/Welcome.tsx";
-import {Home} from "./components/Home.tsx";
+import {Home} from "./components/home/Home.tsx";
 
 function App() {
   if (keycloak.authenticated) {
